@@ -1,0 +1,5 @@
+<!-- a simple form with input to edit the fragment -->
+<form hx-post="/fragment/{{.ID}}/edit" hx-swap="outerHTML">
+    <input type="text" name="text" value="{{ .Text }}">
+    <button type="submit">Save</button>
+</form>

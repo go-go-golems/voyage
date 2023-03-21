@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voyage</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+</head>
+<body>
+
+<h1>Voyage</h1>
+<!--
+<form hx-post="/api/image/upload" hx-target="#image-container">
+    <label for="image-input">Copy and paste an image into the field below:</label>
+    <input type="text" id="image-input" name="image">
+    <button type="submit">Submit</button>
+</form>
+-->
+
+<section id="fragment-management" class="container">
+    <div class="row">
+        <div class="column column-50">
+            <p>Create and manage fragments</p>
+            <form hx-post="/create-fragment" hx-target="#fragments" hx-swap="beforeend">
+                <input type="text" name="text" placeholder="Enter some text">
+                <button type="submit">Create fragment</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div id="fragments" class="container">
+    {{ range .Fragments }}
+    {{ template "fragment.tmpl.html" . }}
+    {{ end }}
+</div>
+
+<!--
+<div id="drop-target">Drop an image here</div>
+
+<script>
+    const dropTarget = document.getElementById('drop-target');
+
+    dropTarget.addEventListener('dragover', (event) => {
+        event.preventDefault();
+    });
+
+    dropTarget.addEventListener('dragenter', (event) => {
+        console.log('dragenter');
+        event.preventDefault();
+        dropTarget.classList.add('highlight');
+    });
+
+    dropTarget.addEventListener('dragleave', (event) => {
+        console.log('dragleave');
+        event.preventDefault();
+        dropTarget.classList.remove('highlight');
+    });
+
+    dropTarget.addEventListener('drop', (event) => {
+        console.log('drop', event);
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+            const formData = new FormData();
+            formData.append('image', files[0]);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/image/upload', true);
+            xhr.onload = function () {
+                console.log('onload');
+                if (xhr.status === 200) {
+                    const imageURL = JSON.parse(xhr.responseText).url;
+                    const img = document.createElement('img');
+                    img.src = imageURL;
+                    document.body.appendChild(img);
+                } else {
+                    console.error('Error uploading image');
+                }
+            };
+            xhr.send(formData);
+        }
+        dropTarget.classList.remove('highlight');
+    });
+
+    document.addEventListener('paste', (event) => {
+        console.log('paste');
+        const items = event.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                const blob = items[i].getAsFile();
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/image/upload', true);
+                xhr.onload = function () {
+                    console.log('onload');
+                    if (xhr.status === 200) {
+                        const imageURL = JSON.parse(xhr.responseText).url;
+                        const img = document.createElement('img');
+                        img.src = imageURL;
+                        document.body.appendChild(img);
+                    } else {
+                        console.error('Error uploading image');
+                    }
+                };
+                xhr.send(formData);
+                break;
+            }
+        }
+    });
+</script>
+-->
+
+
+</body>
+</html>

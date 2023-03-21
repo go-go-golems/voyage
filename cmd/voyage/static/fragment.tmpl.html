@@ -1,0 +1,6 @@
+<div hx-target="this"
+     hx-swap="outerHTML"
+     class="fragment row">
+    <div class="column column-25">{{ .Text }}</div>
+    <div class="column column-10">(<a href="#" hx-get="/fragment/{{.ID}}/edit">edit</a>)</div>
+</div>
