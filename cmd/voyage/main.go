@@ -13,9 +13,6 @@ import (
 //go:embed static/*
 var staticFS embed.FS
 
-	// Return the HTML fragment
-}
-
 func findFragment(id int) *Fragment {
 	for _, fragment := range fragments {
 		if fragment.ID == id {
@@ -56,7 +53,7 @@ func main() {
 		// convert idString to int
 		id, err := strconv.Atoi(idString)
 		if err != nil {
-			c.AbortWithError(http.StatusBadRequest, err)
+			c.or(http.StatusBadRequest, err)
 			return
 		}
 
