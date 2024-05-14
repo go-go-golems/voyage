@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	_ "embed"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	"net/http"
@@ -61,7 +60,7 @@ func main() {
 		defer lock.Unlock()
 		fragment := findFragment(id)
 		if fragment == nil {
-			c.AbortWithError(http.StatusNotFound, fmt.Errorf("fragment %s not found", id))
+			c.AbortWithError(http.StatusNotFound, errors.Errorf("fragment %s not found", id))
 			return
 		}
 		c.HTML(http.StatusOK, "fragment-edit.tmpl.html", fragment)
@@ -81,7 +80,7 @@ func main() {
 		defer lock.Unlock()
 		fragment := findFragment(id)
 		if fragment == nil {
-			c.AbortWithError(http.StatusNotFound, fmt.Errorf("fragment %s not found", id))
+			c.AbortWithError(http.StatusNotFound, errors.Errorf("fragment %s not found", id))
 			return
 		}
 		fragment.Text = text
